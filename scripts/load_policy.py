@@ -111,6 +111,7 @@ def load_env(logdir, wrapper, headless=False, device='cuda:0'):
 
     Cfg.domain_rand.randomize_end_effector_force = False
 
+    Cfg.use_rot6d = False
     Cfg.env.num_recording_envs = 1
     Cfg.env.num_envs = 1
     Cfg.terrain.num_rows = 5

@@ -124,8 +124,8 @@ def train_go1(arg):
     Cfg.arm.arm_num_privileged_obs = 9
     Cfg.env.num_privileged_obs = 9
     
-    Cfg.asset.render_sphere = True # NOTE no use in headless
-    Cfg.hybrid.use_vision = False
+    Cfg.asset.render_sphere = True # NOTE no use in headless; useful for debugging
+    Cfg.hybrid.use_vision = False  # no visual process
     Cfg.rewards.manip_weight_lpy = 3
     Cfg.rewards.manip_weight_rpy = 1
     Cfg.hybrid.reward_scales.arm_dof_vel = 10 * Cfg.reward_scales.dof_vel

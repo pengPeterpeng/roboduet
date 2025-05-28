@@ -50,7 +50,7 @@ def play_go1(args):
     env.commands_arm[:, 5] = yaw_cmd
 
     count = 0
-    
+    print(f"Start playing {num_eval_steps} steps...")
     obs = env.get_arm_observations()
     for i in (range(num_eval_steps)):
 
@@ -63,6 +63,7 @@ def play_go1(args):
             
             dog_obs = env.get_dog_observations()
             actions_dog = dog_policy(dog_obs)
+        print(f"Playing step {i+1}/{num_eval_steps}, time taken: {time.time() - t1:.4f} seconds")
         ret = env.step(actions_dog, actions_arm[...,:-2], )
 
 
