@@ -58,9 +58,9 @@ def config_asset(Cnfg: Union[Cfg, Meta]):
         'RR_hip_joint': -0.1,  # [rad]
 
         'FL_thigh_joint': 0.8,  # [rad]
-        'RL_thigh_joint': 1.,  # [rad]
+        'RL_thigh_joint': 0.8,  # [rad]
         'FR_thigh_joint': 0.8,  # [rad]
-        'RR_thigh_joint': 1.,  # [rad]
+        'RR_thigh_joint': 0.8,  # [rad]
 
         'FL_calf_joint': -1.5,  # [rad]
         'RL_calf_joint': -1.5,  # [rad]
@@ -79,8 +79,8 @@ def config_asset(Cnfg: Union[Cfg, Meta]):
         'widow_right_finger': 0.,
         
         "zarx_j1": 0.0,
-        "zarx_j2": 0.8,
-        "zarx_j3": 0.8,
+        "zarx_j2": 0.0,
+        "zarx_j3": 0.0,
         "zarx_j4": 0.0,
         "zarx_j5": 0.0,
         "zarx_j6": 0.0,
