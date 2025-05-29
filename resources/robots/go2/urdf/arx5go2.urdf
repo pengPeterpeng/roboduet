@@ -1178,7 +1178,7 @@ Stephen Brawner (brawner@gmail.com)
     </joint>
 
     <joint name="zarx5p2_mount" type="fixed">
-        <origin rpy="0 0 0" xyz="0.1934 0 0.057" />
+        <origin rpy="0 0 0" xyz="0.1934 0 0.057"/>
         <parent link="base" />
         <child link="base_link" />
     </joint>
