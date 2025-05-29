@@ -716,7 +716,7 @@
     </transmission>
 
     <joint name="zarx5p2_mount" type="fixed">
-        <origin rpy="0 0 0" xyz="0.0 0 0.057" />
+        <origin rpy="0 0 0" xyz="0.1881 0 0.057" />
         <parent link="base" />
         <child link="base_link" />
     </joint>
