@@ -652,7 +652,7 @@ class HistoryWrapper(gym.Wrapper):
         self.obs_history[env_ids, :] = 0
         self.arm_obs_history[env_ids, :] = 0
         self.dog_obs_history[env_ids, :] = 0
-        return ret
+        return ret  # not a problem as it is not called by reset()
     
     def clear_cached(self, env_ids):
         self.obs_history[env_ids, :] = 0

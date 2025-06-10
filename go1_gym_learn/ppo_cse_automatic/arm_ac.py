@@ -17,30 +17,30 @@ class ArmAC_Args(PrefixProto, cli=False):
 
 
 class ArmActorCritic(nn.Module):
-    is_recurrent = False
+    is_recurrent = False  # usage? 
 
     def __init__(self, num_obs,
                  num_privileged_obs,
                  num_obs_history,
-                 num_actions,
+                 num_actions,   # joint actions 
                  **kwargs):
         if kwargs:
             print("ArmActorCritic.__init__ got unexpected arguments, which will be ignored: " + str(
                 [key for key in kwargs.keys()]))
-        self.decoder = ArmAC_Args.use_decoder
+        self.decoder = ArmAC_Args.use_decoder  # false 
         super().__init__()
 
         self.num_obs = num_obs
         self.num_obs_history = num_obs_history
         self.num_privileged_obs = num_privileged_obs
 
-        activation = get_activation(ArmAC_Args.activation)
+        activation = get_activation(ArmAC_Args.activation)  # elu
 
         # Adaptation module
         adaptation_module_layers = []
         adaptation_module_layers.append(nn.Linear(self.num_obs_history, ArmAC_Args.adaptation_module_branch_hidden_dims[0]))
         adaptation_module_layers.append(activation)
-        for l in range(len(ArmAC_Args.adaptation_module_branch_hidden_dims)):
+        for l in range(len(ArmAC_Args.adaptation_module_branch_hidden_dims)):  # 2 layers
             if l == len(ArmAC_Args.adaptation_module_branch_hidden_dims) - 1:
                 adaptation_module_layers.append(
                     nn.Linear(ArmAC_Args.adaptation_module_branch_hidden_dims[l], self.num_privileged_obs))
@@ -50,7 +50,7 @@ class ArmActorCritic(nn.Module):
                               ArmAC_Args.adaptation_module_branch_hidden_dims[l + 1]))
                 adaptation_module_layers.append(activation)
 
-        self.adaptation_module = nn.Sequential(*adaptation_module_layers)
+        self.adaptation_module = nn.Sequential(*adaptation_module_layers)  # adaptation layers 
 
 
         self.actor_history_encoder = nn.Sequential(
@@ -61,11 +61,11 @@ class ArmActorCritic(nn.Module):
             nn.Linear(ArmAC_Args.actor_hidden_dims[1], ArmAC_Args.actor_hidden_dims[2]),
         )
 
-        # Policy
+        # Policy network
         actor_layers = []
         actor_layers.append(nn.Linear(self.num_obs + self.num_privileged_obs + ArmAC_Args.actor_hidden_dims[2], ArmAC_Args.actor_hidden_dims[0]))
         actor_layers.append(activation)
-        for l in range(len(ArmAC_Args.actor_hidden_dims)):
+        for l in range(len(ArmAC_Args.actor_hidden_dims)):  # 3 layers 
             if l == len(ArmAC_Args.actor_hidden_dims) - 1:
                 actor_layers.append(nn.Linear(ArmAC_Args.actor_hidden_dims[l], num_actions))
             else:
@@ -81,9 +81,9 @@ class ArmActorCritic(nn.Module):
             nn.Linear(ArmAC_Args.critic_hidden_dims[0], ArmAC_Args.critic_hidden_dims[1]),
             activation,
             nn.Linear(ArmAC_Args.critic_hidden_dims[1], ArmAC_Args.critic_hidden_dims[2]),
-        )
+        )   # 3 linear layers 
 
-        # Value function
+        # Value function network
         critic_layers = []
         critic_layers.append(nn.Linear(self.num_obs + self.num_privileged_obs + ArmAC_Args.critic_hidden_dims[2], ArmAC_Args.critic_hidden_dims[0]))
         critic_layers.append(activation)
@@ -104,7 +104,7 @@ class ArmActorCritic(nn.Module):
 
         self.distribution = None
         # disable args validation for speedup
-        Normal.set_default_validate_args = False
+        Normal.set_default_validate_args = False  # distribution of what?
 
     @staticmethod
     # not used at the moment

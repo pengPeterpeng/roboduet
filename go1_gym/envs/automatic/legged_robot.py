@@ -41,16 +41,16 @@ class LeggedRobot(BaseTask):
         
         super().__init__(self.cfg, sim_params, physics_engine, sim_device, headless, self.eval_cfg)
 
-        self._init_command_distribution(torch.arange(self.num_envs, device=self.device))
+        self._init_command_distribution(torch.arange(self.num_envs, device=self.device))  # init commands
         # self.rand_buffers_eval = self._init_custom_buffers__(self.num_eval_envs)
         if not self.headless:
             self.set_camera(self.cfg.viewer.pos, self.cfg.viewer.lookat)
 
 
         
-        self._init_buffers()
+        self._init_buffers()  # init paras 
 
-        self._prepare_reward_function()
+        self._prepare_reward_function()  # init rewards cal results 
         self.init_done = True
         self.record_now = False
         self.record_eval_now = False
@@ -227,7 +227,7 @@ class LeggedRobot(BaseTask):
             # if self.device == 'cpu':
             self.gym.fetch_results(self.sim, True)
             self.gym.refresh_dof_state_tensor(self.sim)
-        self.post_physics_step()
+        self.post_physics_step()  # reset idx
 
         return self.rew_buf_dog, self.rew_buf_arm, self.reset_buf, self.extras
 
@@ -640,6 +640,7 @@ class LeggedRobot(BaseTask):
     def create_sim(self):
         """ Creates simulation, terrain and evironments
         """
+        import ipdb; ipdb.set_trace()
         self.up_axis_idx = 2  # 2 for z, 1 for y -> adapt gravity accordingly
         self.sim = self.gym.create_sim(self.sim_device_id, self.graphics_device_id, self.physics_engine,
                                        self.sim_params)

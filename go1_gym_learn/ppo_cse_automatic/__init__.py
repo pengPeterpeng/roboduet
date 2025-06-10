@@ -43,7 +43,7 @@ def class_to_dict(obj) -> dict:
 
 
 
-class RunnerArgs(PrefixProto, cli=False):
+class RunnerArgs(PrefixProto, cli=False):  # default setting paras for ppo transitions 
     # runner
     algorithm_class_name = 'PPO'
     num_steps_per_env = 24  # per iteration
@@ -90,15 +90,15 @@ class Runner:
         self.run_name = run_name
         self.log_dir = log_dir
         self.debug = debug
-        self.num_steps_per_env = RunnerArgs.num_steps_per_env
+        self.num_steps_per_env = RunnerArgs.num_steps_per_env  # 24
         
         self.arm_model = ArmActorCritic(
             num_obs=self.env.cfg.arm.arm_num_observations,
             num_privileged_obs=self.env.cfg.arm.arm_num_privileged_obs,
             num_obs_history=self.env.cfg.arm.arm_num_obs_history,
             num_actions=self.env.cfg.arm.num_actions_arm_cd,
-            device=self.device,
-        ).to(self.device)
+            device=self.device,  # device setting 
+        ).to(self.device)  # nn definition 
         
         self.dog_model = DogActorCritic(
             num_obs = self.env.cfg.dog.dog_num_observations,
@@ -120,14 +120,14 @@ class Runner:
 
 
         self.alg_arm = PPO(self.arm_model, device=self.device)
-        self.alg_arm.init_storage(
+        self.alg_arm.init_storage(  # init ppo storage for arm
             self.env.num_train_envs, 
             self.num_steps_per_env,
             [self.env.cfg.arm.arm_num_observations],
             [self.env.cfg.arm.arm_num_privileged_obs],
             [self.env.cfg.arm.arm_num_obs_history],
             [self.env.cfg.arm.num_actions_arm_cd],
-            [self.env.cfg.arm.num_actions_arm_cd])
+            [self.env.cfg.arm.num_actions_arm_cd])  # device is gpu
 
         self.alg_dog = PPO(self.dog_model, device=self.device)
         self.alg_dog.init_storage(
@@ -144,7 +144,7 @@ class Runner:
         self.current_learning_iteration = 0
         self.last_recording_it = 0
 
-        self.env.reset()
+        self.env.reset()  # initally reset all the paras and define all paras
 
     def learn(self, num_learning_iterations, init_at_random_ep_len=False, eval_freq=100, eval_expert=False, width=80, pad=35):
 
@@ -154,11 +154,12 @@ class Runner:
 
         # split train and test envs
         num_train_envs = self.env.num_train_envs
-
+        import ipdb; ipdb.set_trace()  #check obs
         obs_dict_arm = self.env.get_arm_observations()
         obs_arm, privileged_obs_arm, obs_history_arm = obs_dict_arm["obs"], obs_dict_arm["privileged_obs"], obs_dict_arm["obs_history"]
         obs_arm, privileged_obs_arm, obs_history_arm = obs_arm.to(self.device), privileged_obs_arm.to(self.device), obs_history_arm.to(
             self.device)
+        import ipdb; ipdb.set_trace()  #before train step 
         self.alg_arm.actor_critic.train()
         self.alg_dog.actor_critic.train()
 

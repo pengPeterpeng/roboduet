@@ -30,7 +30,7 @@ class PPO_Args(PrefixProto):
 
 
 class PPO:
-    actor_critic: ArmActorCritic
+    actor_critic: ArmActorCritic  # claim the type
 
     def __init__(self, actor_critic, device='cpu'):
 

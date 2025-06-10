@@ -41,7 +41,7 @@ class RolloutStorage:
         self.dones = torch.zeros(num_transitions_per_env, num_envs, 1, device=self.device).byte()
 
         # For PPO
-        self.actions_log_prob = torch.zeros(num_transitions_per_env, num_envs, 1, device=self.device)
+        self.actions_log_prob = torch.zeros(num_transitions_per_env, num_envs, 1, device=self.device)   # last dim is 1
         self.values = torch.zeros(num_transitions_per_env, num_envs, 1, device=self.device)
         self.returns = torch.zeros(num_transitions_per_env, num_envs, 1, device=self.device)
         self.advantages = torch.zeros(num_transitions_per_env, num_envs, 1, device=self.device)
